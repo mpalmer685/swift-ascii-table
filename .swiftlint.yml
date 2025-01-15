@@ -1,0 +1,20 @@
+# Enable/disable rules
+disabled_rules:
+  - trailing_whitespace
+opt_in_rules:
+  - toggle_bool
+
+exclude:
+  - .build
+
+# Rule configurations
+function_body_length:
+  warning: 100
+  error: 200
+large_tuple:
+  warning: 4
+  error: 6
+switch_case_alignment:
+  indented_cases: true
+trailing_comma:
+  mandatory_comma: true
