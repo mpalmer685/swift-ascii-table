@@ -173,4 +173,53 @@ final class TableTests: XCTestCase {
       """
     }
   }
+
+  func testConditionalColumn() {
+    let includeColumnB = false
+    let table1 = Table<(String, String, String)> {
+      Column("A") { $0.0 }
+      if includeColumnB {
+        Column("B") { $0.1 }
+      }
+      Column("C") { $0.2 }
+    }
+
+    let data = [
+      ("1A", "1B", "1C"),
+      ("2A", "2B", "2C"),
+    ]
+
+    assertInlineSnapshot(of: table1.render(data), as: .lines) {
+      """
+      ┌────┬────┐
+      │ A  │ C  │
+      ├────┼────┤
+      │ 1A │ 1C │
+      ├────┼────┤
+      │ 2A │ 2C │
+      └────┴────┘
+      """
+    }
+
+    let table2 = Table<(String, String, String)> {
+      Column("A") { $0.0 }
+      if includeColumnB {
+        Column("B") { $0.1 }
+      } else {
+        Column("C") { $0.2 }
+      }
+    }
+
+    assertInlineSnapshot(of: table2.render(data), as: .lines) {
+      """
+      ┌────┬────┐
+      │ A  │ C  │
+      ├────┼────┤
+      │ 1A │ 1C │
+      ├────┼────┤
+      │ 2A │ 2C │
+      └────┴────┘
+      """
+    }
+  }
 }

@@ -187,6 +187,18 @@ public struct TableBuilder<Row> {
   public static func buildBlock(_ columns: [Column<Row>]...) -> [Column<Row>] {
     columns.flatMap(\.self)
   }
+
+  public static func buildEither(first component: [Column<Row>]) -> [Column<Row>] {
+    component
+  }
+
+  public static func buildEither(second component: [Column<Row>]) -> [Column<Row>] {
+    component
+  }
+
+  public static func buildOptional(_ component: [Column<Row>]?) -> [Column<Row>] {
+    component ?? []
+  }
 }
 
 private extension Array where Element: RandomAccessCollection, Element.Index == Int {
